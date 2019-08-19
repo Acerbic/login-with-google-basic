@@ -1,6 +1,15 @@
 {
+    "scripts": {
+        "start:api": "cd packages/apiserver && yarn start",
+        "start:web": "cd packages/frontend && yarn dev"
+    },
     "private": true,
-    "workspaces": [
-        "packages/*"
-    ]
+    "workspaces": {
+        "packages": [
+            "packages/*"
+        ],
+        "nohoist": [
+            "**"
+        ]
+    }
 }
