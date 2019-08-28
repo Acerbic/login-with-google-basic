@@ -1,15 +1,8 @@
 {
     "scripts": {
+        "install": "cd packages/apiserver && yarn && cd ../../packages/frontend && yarn",
         "start:api": "cd packages/apiserver && yarn start",
         "start:web": "cd packages/frontend && yarn dev"
     },
-    "private": true,
-    "workspaces": {
-        "packages": [
-            "packages/*"
-        ],
-        "nohoist": [
-            "**"
-        ]
-    }
+    "private": true
 }

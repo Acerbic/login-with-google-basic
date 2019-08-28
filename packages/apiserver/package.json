@@ -1,18 +1,23 @@
 {
-    "name": "apiserver",
+    "name": "oatts-apiserver",
     "version": "1.0.0",
     "description": "",
     "author": "Anthony Cerbic <kuzzdra@gmail.com>",
     "keywords": [],
     "license": "ISC",
     "scripts": {
-        "start": "node index.js",
+        "start": "node index.js | pino-colada",
         "test": "echo \"Error: no test specified\" && exit 1"
     },
     "dependencies": {
+        "cors": "^2.8.5",
+        "dotenv": "^8.1.0",
         "express": "^4.17.1",
+        "googleapis": "^42.0.0",
         "http-errors": "^1.7.3",
+        "jsonwebtoken": "^8.5.1",
         "pino": "^5.13.2",
+        "pino-colada": "^1.4.5",
         "pino-http": "^4.2.0",
         "pino-pretty": "^3.2.1"
     }
