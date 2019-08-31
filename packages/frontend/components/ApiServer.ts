@@ -32,7 +32,7 @@ export async function validateAuth(token: string): Promise<boolean> {
 }
 
 /**
- * Creates anon session (acquires CSRF token used later to proper YT auth)
+ * Creates anon session (acquires CSRF token used later to proper Google OAuth)
  */
 export async function createSession(): Promise<string> {
     const response = await fetch(`${apiserver_url}/api/create_session`, {

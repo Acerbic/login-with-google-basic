@@ -11,7 +11,7 @@ export const buildOAuthURL = function(
     redirect_state: GoogleRedirectionState,
     scopes?: string[]
 ): string {
-    const yt_auth_params = {
+    const google_auth_params = {
         response_type: "code", // code->tokens flow
         client_id,
         redirect_uri: apiserver_google_auth_redirect_uri,
@@ -27,6 +27,6 @@ export const buildOAuthURL = function(
 
     return (
         "https://accounts.google.com/o/oauth2/v2/auth?" +
-        querystring.stringify(yt_auth_params)
+        querystring.stringify(google_auth_params)
     );
 };

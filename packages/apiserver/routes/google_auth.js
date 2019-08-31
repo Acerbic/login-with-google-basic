@@ -1,7 +1,14 @@
 /**
- * Redirection endpoint from Youtube authentication user consent screen
+ * Redirection endpoint from Google authentication user consent screen
  * This handler in turn will redirect back to Frontend login finalization page
- *
+ * Upon redirection to this endpoint, it recieves query params:
+ *  - code - OAuth2 one-time code to be exchange for (semi-) permanent access tokens
+ *  - state - Data from front-end app, to identify user and app (object, JSON-stringified):
+ *      {
+ *          csrfToken: string; // anti-forgery token previously requested from this API server
+ *          returnTo: string; // URL of a front-end page to redirect browser to with successful
+ *                            // authorization (auth results in a token send via cookie "authtoken")
+ *      }
  */
 
 const jwt = require("jsonwebtoken");
@@ -10,8 +17,8 @@ const { google } = require("googleapis");
 const apiserver_url = "http://127.0.0.1:1234";
 
 const oauth2Client = new google.auth.OAuth2(
-    process.env.YT_CLIENT_ID,
-    process.env.YT_CLIENT_SECRET,
+    process.env.GOOGLE_CLIENT_ID,
+    process.env.GOOGLE_CLIENT_SECRET,
     apiserver_url + "/api/google_auth"
 );
 

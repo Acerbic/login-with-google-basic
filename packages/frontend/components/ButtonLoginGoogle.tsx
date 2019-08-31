@@ -17,7 +17,8 @@ interface P {
     authURL?: string;
     // local storage key name of persistent "auth token". Defaults to
     // "login-with-google-token". If specified, should not change during the
-    // course of application
+    // course of application. NOTE: "auth success" page should be storign
+    // session token into that storage key!
     storageTokenName?: string;
     // Call to a backend API server that validates a stored token. If the token
     // lost its validity, a new token must be acquired.
