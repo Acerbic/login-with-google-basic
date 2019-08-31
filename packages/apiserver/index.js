@@ -16,8 +16,9 @@ app.use(cors());
 
 const apiserver_url = "http://127.0.0.1:1234";
 
-app.get("/api/yt_auth", routes.yt_auth);
+app.get("/api/google_auth", routes.google_auth);
 app.get("/api/validate_auth", routes.validate_auth);
+app.get("/api/create_session", routes.create_session);
 
 // Error handlers
 app.use(function fourOhFourHandler(req, res) {

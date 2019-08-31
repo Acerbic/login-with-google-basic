@@ -31,6 +31,24 @@ export async function validateAuth(token: string): Promise<boolean> {
     }
 }
 
+/**
+ * Creates anon session (acquires CSRF token used later to proper YT auth)
+ */
+export async function createSession(): Promise<string> {
+    const response = await fetch(`${apiserver_url}/api/create_session`, {
+        method: "GET",
+    });
+
+    if (response.ok) {
+        return response.json();
+    } else {
+        throw new Error(
+            `Error code ${response.status}:\n ${await response.text()}`
+        );
+    }
+}
+
 export default {
     validateAuth,
+    createSession,
 };
