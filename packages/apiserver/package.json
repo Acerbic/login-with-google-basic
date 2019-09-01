@@ -19,6 +19,7 @@
         "pino": "^5.13.2",
         "pino-colada": "^1.4.5",
         "pino-http": "^4.2.0",
-        "pino-pretty": "^3.2.1"
+        "pino-pretty": "^3.2.1",
+        "uuid": "^3.3.3"
     }
 }

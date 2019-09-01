@@ -4,7 +4,10 @@
  * @see https://developers.google.com/identity/protocols/OpenIDConnect ["Create an anti-forgery state token"]
  */
 
+const sessions = require("../storage");
+
 module.exports = async (req, res, next) => {
-    // TODO: secure, unguessiable, randomized - store for later validation
-    res.json("ANONYMOUS-SESSION-ID");
+    // secure, unguessiable, randomized - store for later validation
+    const id = sessions.createAnonSession();
+    res.json(id);
 };

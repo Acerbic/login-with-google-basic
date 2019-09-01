@@ -13,6 +13,7 @@
 
 const jwt = require("jsonwebtoken");
 const { google } = require("googleapis");
+const sessions = require("../storage");
 
 const apiserver_url = "http://127.0.0.1:1234";
 
@@ -26,8 +27,9 @@ module.exports = async (req, res, next) => {
     if (req.query.code && req.query.state) {
         try {
             const app_state = JSON.parse(req.query.state);
-            // TODO: actual check.
-            if (app_state.csrfToken !== "ANONYMOUS-SESSION-ID") {
+
+            // Check CSRF.
+            if (sessions.getSession(app_state.csrfToken) === null) {
                 throw "Bad CSRF token";
             }
 
@@ -35,16 +37,17 @@ module.exports = async (req, res, next) => {
             // (long-term) access tokens
             const { tokens } = await oauth2Client.getToken(req.query.code);
 
-            // TODO: save tokens, auth user, etc...
+            // Save tokens, auth user, etc...
+            const session_id = sessions.createGoogleAuthSession(tokens);
             oauth2Client.setCredentials(tokens);
 
             const id_token = jwt.decode(tokens.id_token);
 
-            // FIXME: generally bad idea to expose access tokens, unless the
-            //          frontend need them to operate
+            // Create an Google authenticated session for the user
             const jwtoken = jwt.sign(
                 {
-                    tokens,
+                    id: session_id,
+                    type: "google",
                     email: id_token.email,
                     name: id_token.name,
                     sub_id: id_token.sub,
