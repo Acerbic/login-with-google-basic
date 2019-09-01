@@ -15,7 +15,8 @@ const jwt = require("jsonwebtoken");
 const { google } = require("googleapis");
 const sessions = require("../storage");
 
-const apiserver_url = "http://127.0.0.1:1234";
+const apiserver_url =
+    process.env.APISERVER_URL || "http://backend.localhost.com:1234";
 
 const oauth2Client = new google.auth.OAuth2(
     process.env.GOOGLE_CLIENT_ID,
@@ -55,12 +56,11 @@ module.exports = async (req, res, next) => {
                 process.env.JWT_SECRET
             );
 
-            // TODO: set target cookie domain??
-            res.cookie("authtoken", jwtoken, {
-                httpOnly: false,
-            });
+            // extracting domain from returnTo to set cookie
+            const url = new URL(app_state.returnTo);
+            url.searchParams.set("authtoken", jwtoken);
 
-            res.redirect(app_state.returnTo);
+            res.redirect(url.href);
         } catch (ex) {
             res.end("Auth boohoo");
             console.log(ex);

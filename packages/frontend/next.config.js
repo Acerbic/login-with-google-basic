@@ -1,3 +1,6 @@
+// Load .env file into "process.env"
+require("dotenv").config();
+
 const webpack = require("webpack");
 const withLess = require("@zeit/next-less");
 
@@ -70,6 +73,10 @@ module.exports = withBundleAnalyzer(
         },
 
         /* Other NextJS config */
-        env: {},
+        env: {
+            GOOGLE_CLIENT_ID: process.env.GOOGLE_CLIENT_ID,
+            APISERVER_URL: process.env.APISERVER_URL,
+            FRONTEND_URL: process.env.FRONTEND_URL,
+        },
     })
 );

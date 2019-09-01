@@ -14,7 +14,8 @@ app.use(pinoHttp({ logger }));
 
 app.use(cors());
 
-const apiserver_url = "http://127.0.0.1:1234";
+const apiserver_url =
+    process.env.APISERVER_URL || "http://backend.localhost.com:1234";
 
 app.get("/api/google_auth", routes.google_auth);
 app.get("/api/validate_auth", routes.validate_auth);

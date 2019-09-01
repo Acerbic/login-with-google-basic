@@ -57,7 +57,8 @@ To communicated with Google, official "googleapis" package is used.
    codes and metadata received from the front-end page. The apiserver endpoint
    now checks if "anon session" token is valid and procures proper Google access
    tokens, as described in the OAuth2 documentation. A new "google-auth" session
-   is created. Token for this new session is set as cookie.
+   is created. Token for this new session is set as URL query param on the
+   "return page" URL.
 6. And the browser is redirected back to the frontend, to the "return page" URL,
    provided by frontend itself earlier.
 7. On the return page, frontend displays "Login successful" message and stores

@@ -4,10 +4,11 @@ import { Row, Col } from "antd";
 import { validateAuth, createSession } from "../components/ApiServer";
 import { ButtonLoginGoogle } from "../components/ButtonLoginGoogle";
 
-const apiserver_url = "http://127.0.0.1:1234";
-const frontend_url = "http://127.0.0.1:3000";
-const client_id =
-    "827922424625-gdbahj8cnmlp5g8i5i5sbipamrqtbfgm.apps.googleusercontent.com";
+const apiserver_url =
+    process.env.APISERVER_URL || "http://backend.localhost.com:1234";
+const frontend_url =
+    process.env.FRONTEND_URL || "http://frontend.localhost.com:3000";
+const client_id = process.env.GOOGLE_CLIENT_ID;
 
 const IndexPage = () => {
     const [anonToken, change_anonToken] = useState<string | null>(null);
@@ -17,6 +18,10 @@ const IndexPage = () => {
         createSession().then(token => change_anonToken(token));
         // NOTE: what if anon token expires?
     }, []);
+
+    if (!client_id) {
+        return <div>Misconfigured: GOOGLE_CLIENT_ID env variable required</div>;
+    }
 
     return (
         <Row>

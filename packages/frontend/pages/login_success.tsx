@@ -1,35 +1,35 @@
 /**
  * Page to receive results of auth from API server
- * Gets auth tokens via cookies
+ * Gets auth tokens via URL query param
  */
 
 import React, { useState } from "react";
-import * as cookies from "tiny-cookie";
+import { useRouter } from "next/router";
 import * as ls from "local-storage";
 
 import { Row, Col } from "antd";
-
-const AUTH_COOKIE_NAME = "authtoken";
 
 export default () => {
     let [loading, changeLoading] = useState(true);
     let [logSuccess, changeLogSuccess] = useState(false);
 
+    const router = useRouter();
+
     /**
-     * One-time on mounting: check cookies for auth cookie
+     * One-time on mounting: check params for auth token
      */
     React.useEffect(() => {
         changeLoading(false);
-        const cookie = cookies.isEnabled() && cookies.get(AUTH_COOKIE_NAME);
 
-        // process cookie from login by API server
-        if (cookie) {
+        // process token from login by API server
+        if (router.query.authtoken) {
             changeLogSuccess(true);
-            ls.set("authtoken", cookie);
+            ls.set("authtoken", router.query.authtoken);
+        } else {
+            console.error("Can't get the auth token", router.query);
         }
-        cookies.remove(AUTH_COOKIE_NAME);
         // TODO: close window
-    }, []);
+    }, [router.query]);
 
     return (
         <Row>

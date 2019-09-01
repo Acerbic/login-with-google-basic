@@ -3,7 +3,8 @@
  */
 
 import fetch from "isomorphic-unfetch";
-const apiserver_url = "http://127.0.0.1:1234";
+const apiserver_url =
+    process.env.APISERVER_URL || "http://backend.localhost.com:1234";
 
 /**
  * Test if client-side preserved token is still valid, or re-auth is needed
