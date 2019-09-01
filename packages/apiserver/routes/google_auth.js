@@ -1,7 +1,7 @@
 /**
  * Redirection endpoint from Google authentication user consent screen
  * This handler in turn will redirect back to Frontend login finalization page
- * Upon redirection to this endpoint, it recieves query params:
+ * Upon redirection to this endpoint, it receives query params:
  *  - code - OAuth2 one-time code to be exchange for (semi-) permanent access tokens
  *  - state - Data from front-end app, to identify user and app (object, JSON-stringified):
  *      {

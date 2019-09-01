@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Row, Col } from "antd";
 
-import { buildOAuthURL } from "../components/GoogleOAuthUrl";
 import { validateAuth, createSession } from "../components/ApiServer";
 import { ButtonLoginGoogle } from "../components/ButtonLoginGoogle";
 
@@ -19,21 +18,19 @@ const IndexPage = () => {
         // NOTE: what if anon token expires?
     }, []);
 
-    const authURL =
-        anonToken &&
-        buildOAuthURL(client_id, apiserver_url + "/api/google_auth", {
-            csrfToken: anonToken,
-            returnTo: frontend_url + "/login_success",
-        });
-
     return (
         <Row>
             <Col>
-                <ButtonLoginGoogle
-                    authURL={authURL || undefined}
-                    storageTokenName="authtoken"
-                    tokenValidationCb={validateAuth}
-                ></ButtonLoginGoogle>
+                {anonToken && (
+                    <ButtonLoginGoogle
+                        clientId={client_id}
+                        csrfToken={anonToken}
+                        returnTo={frontend_url + "/login_success"}
+                        redirectTo={apiserver_url + "/api/google_auth"}
+                        storageTokenName="authtoken"
+                        tokenValidationCb={validateAuth}
+                    ></ButtonLoginGoogle>
+                )}
             </Col>
         </Row>
     );

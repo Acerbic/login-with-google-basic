@@ -7,7 +7,7 @@
 const sessions = require("../storage");
 
 module.exports = async (req, res, next) => {
-    // secure, unguessiable, randomized - store for later validation
+    // secure, unguessable randomized - store for later validation
     const id = sessions.createAnonSession();
     res.json(id);
 };
