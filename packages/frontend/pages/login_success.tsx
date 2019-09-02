@@ -3,33 +3,14 @@
  * Gets auth tokens via URL query param
  */
 
-import React, { useState } from "react";
-import { useRouter } from "next/router";
-import * as ls from "local-storage";
-
+import React from "react";
 import { Row, Col } from "antd";
 
+import { useLoginSuccess } from "../components/useLoginSuccess";
+
 export default () => {
-    let [loading, changeLoading] = useState(true);
-    let [logSuccess, changeLogSuccess] = useState(false);
-
-    const router = useRouter();
-
-    /**
-     * One-time on mounting: check params for auth token
-     */
-    React.useEffect(() => {
-        changeLoading(false);
-
-        // process token from login by API server
-        if (router.query.authtoken) {
-            changeLogSuccess(true);
-            ls.set("authtoken", router.query.authtoken);
-        } else {
-            console.error("Can't get the auth token", router.query);
-        }
-        // TODO: close window
-    }, [router.query]);
+    const { loading, logSuccess } = useLoginSuccess();
+    // TODO: close window
 
     return (
         <Row>
