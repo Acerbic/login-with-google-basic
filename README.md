@@ -9,6 +9,35 @@ The project is divided into 2 packages - `./packages`:
 -   apiserver, a backend (Express/NodeJS) server to deal with calls from
     frontend and google APIs directly.
 
+## Setup & Run
+
+Thou there is a top-level `package.json` file, Yarn Workspaces aren't used to
+manage the projects' two packages, as I found it to be not working correctly.
+
+Thus, one must install depependencies for both packages by running a custom
+script command from the top level directory:
+
+```bash
+yarn install
+```
+
+Then, in each of the packages' directories - `./packages/apiserver` and
+`.packages/frontend` - copy file `.env.template` into `.env` and edit it to
+provide the needed variables. Variables **APISERVER_URL** and
+**FRONTEND_URL** must match between the two packages (i.e. value for
+APISERVER_URL in the .env file for one packages must be equal to the value of
+APISERVER_URL for another package).
+
+Then You can run both servers in dev mode by calling
+
+```bash
+yarn start:api
+```
+
+```bash
+yarn start:web
+```
+
 ## Frontend
 
 The frontend is using a specialized component that handles user login/logout
