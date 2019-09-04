@@ -9,6 +9,7 @@
         "analyze": "cross-env ANALYZE=true yarn build"
     },
     "dependencies": {
+        "@trulyacerbic/hooks-react-login-google": "^1.0.0",
         "@types/js-cookie": "^2.2.2",
         "@types/node": "^12.7.1",
         "@zeit/next-less": "^1.0.1",
@@ -22,6 +23,7 @@
         "local-storage": "^2.0.0",
         "next": "^9.0.3",
         "null-loader": "^3.0.0",
+        "querystring": "^0.2.0",
         "react": "^16.9.0",
         "react-dom": "^16.9.0",
         "typescript": "^3.5.3",

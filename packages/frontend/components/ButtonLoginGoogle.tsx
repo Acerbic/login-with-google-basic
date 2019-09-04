@@ -3,13 +3,9 @@
  */
 
 import React, { useEffect } from "react";
-import * as ls from "local-storage";
 import { Button } from "antd";
 
-import { useGoogleLogin } from "./useGoogleLogin";
-import { buildOAuthURL } from "./GoogleOAuthUrl";
-
-const DEFAULT_STORAGE_TOKEN_NAME = "login-with-google-token";
+import { useGoogleLogin } from "@trulyacerbic/hooks-react-login-google";
 
 interface P {
     // id of this app, as registered with google developers' console
@@ -21,7 +17,7 @@ interface P {
 
     // url of a page where user's browser should be returned after
     // authentication ("success login" page); that redirection will contain a
-    // cookie with the authentication resulting session token
+    // URL query param with the authentication resulting session token
     returnTo: string;
 
     // Endpoint of the backend to be redirected to by Google authentication
@@ -43,38 +39,32 @@ interface P {
 }
 
 export const ButtonLoginGoogle = function(props: P) {
-    const loginState = useGoogleLogin(
-        props.storageTokenName || DEFAULT_STORAGE_TOKEN_NAME,
-        props.tokenValidationCb
-    );
+    const loginState = useGoogleLogin({
+        clientId: props.clientId,
+        redirectTo: props.redirectTo,
+        returnTo: props.returnTo,
+        storageTokenName: props.storageTokenName,
+        tokenValidationCb: props.tokenValidationCb,
+    });
 
     // report all changes to isLoggedIn to listeners;
     useEffect(() => {
         props.onChangeLoggedIn && props.onChangeLoggedIn(loginState.isLoggedIn);
     }, [loginState.isLoggedIn]);
 
-    if (loginState.loading) {
+    if (loginState.loading || !props.csrfToken) {
         return <Button type="default" disabled loading />;
     } else {
-        const authURL = buildOAuthURL(props.clientId, props.redirectTo, {
-            csrfToken: props.csrfToken || "",
-            returnTo: props.returnTo,
-        });
-
         return loginState.isLoggedIn ? (
-            <Button
-                type="danger"
-                onClick={() => {
-                    ls.remove(
-                        props.storageTokenName || DEFAULT_STORAGE_TOKEN_NAME
-                    );
-                    loginState.change_isLoggedIn(false);
-                }}
-            >
+            <Button type="danger" onClick={() => loginState.logout()}>
                 Log out
             </Button>
         ) : (
-            <Button type="primary" href={authURL} target="_blank">
+            <Button
+                type="primary"
+                href={loginState.authURL(props.csrfToken)}
+                target="_blank"
+            >
                 Login
             </Button>
         );

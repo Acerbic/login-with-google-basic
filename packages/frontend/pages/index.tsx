@@ -26,16 +26,14 @@ const IndexPage = () => {
     return (
         <Row>
             <Col>
-                {anonToken && (
-                    <ButtonLoginGoogle
-                        clientId={client_id}
-                        csrfToken={anonToken}
-                        returnTo={frontend_url + "/login_success"}
-                        redirectTo={apiserver_url + "/api/google_auth"}
-                        storageTokenName="authtoken"
-                        tokenValidationCb={validateAuth}
-                    ></ButtonLoginGoogle>
-                )}
+                <ButtonLoginGoogle
+                    clientId={client_id}
+                    csrfToken={anonToken || undefined}
+                    returnTo={frontend_url + "/login_success"}
+                    redirectTo={apiserver_url + "/api/google_auth"}
+                    // storageTokenName="authtoken"
+                    tokenValidationCb={validateAuth}
+                ></ButtonLoginGoogle>
             </Col>
         </Row>
     );

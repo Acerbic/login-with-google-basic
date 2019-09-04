@@ -6,7 +6,7 @@
 import React from "react";
 import { Row, Col } from "antd";
 
-import { useLoginSuccess } from "../components/useLoginSuccess";
+import { useLoginSuccess } from "@trulyacerbic/hooks-react-login-google";
 
 export default () => {
     const { loading, logSuccess } = useLoginSuccess();
